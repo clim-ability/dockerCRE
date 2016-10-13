@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dockerCRE" default="build-new">
+
+
+     <target name="build-new" depends="init, copyReplace"/>
+
+
+     <target name="clone" description="Clones Repository for CRE environment from github (to remember only)">
+       <exec dir="/data" executable="git">
+          <srg line="clone https://github.com/tambora-org/dockerCRE.git"/>
+       </exec>
+    </target>
+  
+
+    <target name="init" description="Initialize environment">
+        <property environment="env"/>
+       
+ 
+        <condition property="cre-domain" value="${env.CRE_DOMAIN}" else="example.com">
+            <isset property="env.CRE_DOMAIN" /> 
+        </condition>
+
+        <condition property="cre-username" value="${env.CRE_USERNAME}" else="username">
+            <isset property="env.CRE_USERNAME" />
+        </condition>
+        <condition property="cre-password" value="${env.CRE_PASSWORD}" else="password">
+            <isset property="env.CRE_PASSWORD" />
+        </condition>
+        <condition property="cre-dbname" value="${env.CRE_DBNAME}" else="dbname">
+            <isset property="env.CRE_DBNAME" />
+        </condition>
+
+    </target>
+
+
+    <target name="copyReplace" description="Copy template files and replace some strings">
+         <copy file="proxy/nginx.conf.template" tofile="proxy/nginx.conf" overwrite="true" />
+         <replace file="proxy/nginx.conf" token="example.com" value="${cre-domain}"/>
+
+    </target>
+
+
+
+
+</project>
