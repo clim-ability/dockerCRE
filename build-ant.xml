@@ -37,6 +37,17 @@
          <copy file="proxy/nginx.conf.template" tofile="proxy/nginx.conf" overwrite="true" />
          <replace file="proxy/nginx.conf" token="example.com" value="${cre-domain}"/>
 
+         <copy file="nextcloud/config/config.php.template" tofile="nextcloud/config/autoconfig.php" overwrite="true" />
+         <replace file="nextcloud/config/autoconfig.php" token="example.com" value="${cre-domain}"/>
+         <replace file="nextcloud/config/autoconfig.php" token="klingaman" value="${cre-username}"/>
+         <replace file="nextcloud/config/autoconfig.php" token="pinatubo" value="${cre-password}"/>
+         <replace file="nextcloud/config/autoconfig.php" token="sumatra" value="${cre-dbname}"/>
+
+         <copy file="docker-compose.yml.template" tofile="docker-compose.yml" overwrite="true" />
+         <replace file="docker-compose.yml" token="klingaman" value="${cre-username}"/>
+         <replace file="docker-compose.yml" token="pinatubo" value="${cre-password}"/>
+         <replace file="docker-compose.yml" token="sumatra" value="${cre-dbname}"/>
+
     </target>
 
 
