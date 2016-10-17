@@ -7,5 +7,6 @@ When using this software, add a reference to tambora.org and it's article availa
 ---
 
 Not working yet - stay tuned
+
 Will first only include a nextcloud server with postgresql database, 
 but later will be enhanced by more components 
