@@ -1,5 +1,9 @@
 #
 docker-compose.yml
 proxy/nginx.conf
+proxy/certs
 nextcloud/config/config.php
+nextcloud/apps
+nextcloud/data
+postgres/data
 
