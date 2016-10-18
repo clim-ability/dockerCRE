@@ -3,11 +3,13 @@
 
 
      <target name="build-new" depends="init, copyReplace"/>
+     <target name="kill-all" depends="stop, kill"/>
+     
 
 
      <target name="clone" description="Clones Repository for CRE environment from github (to remember only)">
        <exec dir="/data" executable="git">
-          <srg line="clone https://github.com/tambora-org/dockerCRE.git"/>
+          <arg line="clone https://github.com/tambora-org/dockerCRE.git"/>
        </exec>
     </target>
   
@@ -50,6 +52,16 @@
 
     </target>
 
+   <target name="stop" description="Stops all containers">
+         <exec executable="docker">
+            <arg line="stop nginx2 php2 proxy2 postgres2 nextcloud2 nginx2nc" />
+         </exec>
+   </target>
+
+
+    <target name="kill" description="All data (inclusive database, etc) is removed">
+         <delete dir="postgres/data" />
+    </target>
 
 
 

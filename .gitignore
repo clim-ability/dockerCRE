@@ -1,0 +1,5 @@
+#
+docker-compose.yml
+proxy/nginx.conf
+nextcloud/config/config.php
+
