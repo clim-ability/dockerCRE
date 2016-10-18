@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="dockerCRE" default="build-new">
+<project name="dockerCRE" default="rebuild">
 
 
+     <target name="rebuild" depends="init, stop, copyReplace, start"/>
      <target name="build-new" depends="init, copyReplace"/>
      <target name="kill-all" depends="stop, kill"/>
      
@@ -52,9 +53,19 @@
 
     </target>
 
+   <target name="start">
+        <exec executable="docker-compose">
+           <arg line="up -d" />
+        </exec>
+   </target>
+
+
    <target name="stop" description="Stops all containers">
          <exec executable="docker">
             <arg line="stop nginx2 php2 proxy2 postgres2 nextcloud2 nginx2nc" />
+         </exec>
+         <exec executable="docker">
+            <arg line="rm nginx2 php2 proxy2 postgres2 nextcloud2 nginx2nc" />
          </exec>
    </target>
 
