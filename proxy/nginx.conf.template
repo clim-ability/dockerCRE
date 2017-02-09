@@ -9,6 +9,8 @@ server {
         server_name *.example.com example.com;
         add_header Strict-Transport-Security max-age=15768000;
         
+        client_max_body_size 100M;
+
         ssl on;
         ssl_certificate         /etc/nginx/certs/domain.crt;
         ssl_certificate_key     /etc/nginx/certs/domain.key;
