@@ -31,15 +31,15 @@
         <condition property="cre-dbname" value="${env.CRE_DBNAME}" else="dbname">
             <isset property="env.CRE_DBNAME" />
         </condition>
-<<<<<<< HEAD
+
         <condition property="cre-port-http" value="${env.CRE_PORT_HTTP}" else="80">
             <isset property="env.CRE_PORT_HTTP" />
         </condition>
         <condition property="cre-port-https" value="${env.CRE_PORT_HTTPS}" else="443">
             <isset property="env.CRE_PORT_HTTPS" />
         </condition>
-=======
->>>>>>> develop
+
+
         <condition property="cre-upload-size" value="${env.CRE_UPLOAD_SIZE}" else="100M">
             <isset property="env.CRE_UPLOAD_SIZE" />
         </condition>
