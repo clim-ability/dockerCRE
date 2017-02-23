@@ -17,12 +17,11 @@
 
     <target name="init" description="Initialize environment">
         <property environment="env"/>
-       
  
+
         <condition property="cre-domain" value="${env.CRE_DOMAIN}" else="example.com">
             <isset property="env.CRE_DOMAIN" /> 
         </condition>
-
         <condition property="cre-username" value="${env.CRE_USERNAME}" else="username">
             <isset property="env.CRE_USERNAME" />
         </condition>
@@ -32,6 +31,15 @@
         <condition property="cre-dbname" value="${env.CRE_DBNAME}" else="dbname">
             <isset property="env.CRE_DBNAME" />
         </condition>
+
+        <condition property="cre-port-http" value="${env.CRE_PORT_HTTP}" else="80">
+            <isset property="env.CRE_PORT_HTTP" />
+        </condition>
+        <condition property="cre-port-https" value="${env.CRE_PORT_HTTPS}" else="443">
+            <isset property="env.CRE_PORT_HTTPS" />
+        </condition>
+
+
         <condition property="cre-upload-size" value="${env.CRE_UPLOAD_SIZE}" else="100M">
             <isset property="env.CRE_UPLOAD_SIZE" />
         </condition>
