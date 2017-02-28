@@ -60,7 +60,8 @@
          <replace file="docker-compose.yml" token="klingaman" value="${cre-username}"/>
          <replace file="docker-compose.yml" token="pinatubo" value="${cre-password}"/>
          <replace file="docker-compose.yml" token="sumatra" value="${cre-dbname}"/>
-
+         <replace file="docker-compose.yml" token="80:80" value="${cre-port-http}:80"/>
+		 <replace file="docker-compose.yml" token="443:443" value="${cre-port-https}:443"/>
     </target>
 
    <target name="start">
