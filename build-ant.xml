@@ -69,7 +69,7 @@
 
 	
 	<target name="certificate">
-	    <exec executable="openssl" dir="">
+	    <exec executable="openssl" dir="proxy/certs">
 		  <arg line="req -x509 -nodes -days 365 -newkey rsa:2048"/>
 		  <arg line="-subj '/C=US/ST=Oregon/L=Portland/CN=${env.CRE_DOMAIN}'"/>
 		  <arg line=" -keyout domain.key -out domain.crt"/>
