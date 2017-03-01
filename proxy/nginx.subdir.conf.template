@@ -33,7 +33,7 @@ server {
                     break;
                 }
 
-                if ($request_uri ~* boz\.(.*)) {   
+                if ($request_uri ~* boz\.(.*)) {    
                     proxy_pass      http://nginx2nc:80;
                     break;
                 }				
