@@ -22,6 +22,10 @@
         <condition property="cre-domain" value="${env.CRE_DOMAIN}" else="example.com">
             <isset property="env.CRE_DOMAIN" /> 
         </condition>
+		<condition property="cre-use-subdomains" value="subdomain" else="subdir">
+            <isset property="env.CRE_USE_SUBDOMAINS" /> 
+        </condition>
+		
         <condition property="cre-username" value="${env.CRE_USERNAME}" else="username">
             <isset property="env.CRE_USERNAME" />
         </condition>
@@ -39,7 +43,6 @@
             <isset property="env.CRE_PORT_HTTPS" />
         </condition>
 
-
         <condition property="cre-upload-size" value="${env.CRE_UPLOAD_SIZE}" else="100M">
             <isset property="env.CRE_UPLOAD_SIZE" />
         </condition>
@@ -47,8 +50,9 @@
 
 
     <target name="copyReplace" description="Copy template files and replace some strings">
-         <copy file="proxy/nginx.conf.template" tofile="proxy/nginx.conf" overwrite="true" />
+         <copy file="proxy/nginx.${cre-use-subdomains}.conf.template" tofile="proxy/nginx.conf" overwrite="true" />
          <replace file="proxy/nginx.conf" token="example.com" value="${cre-domain}"/>
+		 <replace file="proxy/nginx.conf" token="999999K" value="${cre-upload-size}"/>
 
          <copy file="nextcloud/config/config.php.template" tofile="nextcloud/config/autoconfig.php" overwrite="true" />
          <replace file="nextcloud/config/autoconfig.php" token="example.com" value="${cre-domain}"/>

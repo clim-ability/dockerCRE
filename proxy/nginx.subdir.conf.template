@@ -9,7 +9,7 @@ server {
         server_name *.example.com example.com;
         add_header Strict-Transport-Security max-age=15768000;
         
-        client_max_body_size 100M;
+        client_max_body_size 999999K;
 
         ssl on;
         ssl_certificate         /etc/nginx/certs/domain.crt;
@@ -27,12 +27,13 @@ server {
                 proxy_set_header        X-Forwarded-Proto $scheme;
 
                 proxy_redirect  off;
-                if ($host ~* box\.(.*)) {
+                if ($request_uri ~^/box(.*)$) {
+				    set $request_uri $2;
                     proxy_pass      http://nginx2nc:80;
                     break;
                 }
 
-                if ($host ~* dev\.(.*)) {
+                if ($request_uri ~* dev\.(.*)) {
                     proxy_pass      http://nginx2:80;
                     break;
                 }
