@@ -51,6 +51,7 @@
     <target name="copyReplace" description="Copy template files and replace some strings">
          <copy file="proxy/nginx.${cre-use-subdomains}.conf.template" tofile="proxy/nginx.conf" overwrite="true" />
          <replace file="proxy/nginx.conf" token="example.com" value="${cre-domain}"/>
+		 <replace file="proxy/nginx.conf" token="4443" value="${cre-port-https}"/>
 		 <replace file="proxy/nginx.conf" token="999999K" value="${cre-upload-size}"/>
 
          <copy file="nextcloud/config/config.php.template" tofile="nextcloud/config/autoconfig.php" overwrite="true" />
