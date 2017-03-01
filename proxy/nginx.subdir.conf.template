@@ -28,7 +28,7 @@ server {
 
                 proxy_redirect  off;
                 if ($request_uri ~^/box(.*)$) {
-				    set $request_uri $2;
+				    set $request_uri $1;
                     proxy_pass      http://nginx2nc:80;
                     break;
                 }
