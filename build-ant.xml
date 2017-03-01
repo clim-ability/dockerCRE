@@ -2,8 +2,8 @@
 <project name="dockerCRE" default="rebuild">
 
 
-     <target name="rebuild" depends="init, stop, copyReplace, start"/>
-     <target name="build-new" depends="init, copyReplace"/>
+     <target name="rebuild" depends="init, stop, certificate, copyReplace, start"/>
+     <target name="build-new" depends="init, certificate, copyReplace"/>
      <target name="kill-all" depends="stop, kill"/>
      
 
@@ -18,7 +18,6 @@
     <target name="init" description="Initialize environment">
         <property environment="env"/>
  
-
         <condition property="cre-domain" value="${env.CRE_DOMAIN}" else="example.com">
             <isset property="env.CRE_DOMAIN" /> 
         </condition>
@@ -67,6 +66,16 @@
          <replace file="docker-compose.yml" token="80:80" value="${cre-port-http}:80"/>
 		 <replace file="docker-compose.yml" token="443:443" value="${cre-port-https}:443"/>
     </target>
+
+	
+	<target name="certificate">
+	    <exec executable="openssl" dir="">
+		  <arg line="req -x509 -nodes 365 -newkey rsa:2048">
+		  <arg line="-subj '/C=US/ST=Oregon/L=Portland/CN=${env.CRE_DOMAIN}'">
+		  <arg line=" -keyout domain.key -out domain.crt">
+		</exec>
+	</target>
+	
 
    <target name="start">
         <exec executable="docker-compose">
