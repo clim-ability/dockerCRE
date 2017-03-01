@@ -70,9 +70,9 @@
 	
 	<target name="certificate">
 	    <exec executable="openssl" dir="">
-		  <arg line="req -x509 -nodes 365 -newkey rsa:2048">
-		  <arg line="-subj '/C=US/ST=Oregon/L=Portland/CN=${env.CRE_DOMAIN}'">
-		  <arg line=" -keyout domain.key -out domain.crt">
+		  <arg line="req -x509 -nodes 365 -newkey rsa:2048"/>
+		  <arg line="-subj '/C=US/ST=Oregon/L=Portland/CN=${env.CRE_DOMAIN}'"/>
+		  <arg line=" -keyout domain.key -out domain.crt"/>
 		</exec>
 	</target>
 	
