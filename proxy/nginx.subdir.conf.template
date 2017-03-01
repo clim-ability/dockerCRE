@@ -43,6 +43,11 @@ server {
                     break;
                 }
                 
+				
+				rewrite ^/box(/.*)$ $1;
+                proxy_pass      http://nginx2nc:80;
+                break;
+				
                 return 404;
         }
 }

@@ -2,10 +2,10 @@
 $AUTOCONFIG = array (
   'trusted_domains' => 
   array (
-    0 => 'www.example.com',
+    0 => 'example.com',
   ),
   'directory' => '/var/www/html/data',
-  'overwrite.cli.url' => 'https://www.example.com',
+  'overwrite.cli.url' => 'https://example.com',
   'dbtype' => 'pgsql',
   'version' => '9.1.1.5',
   'dbname' => 'sumatra',
