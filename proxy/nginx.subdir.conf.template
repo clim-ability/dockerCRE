@@ -11,7 +11,7 @@ server {
         
         client_max_body_size 999999K;
 
-#        ssl on;
+#        ssl on; 
 #        ssl_certificate         /etc/nginx/certs/domain.crt;
 #        ssl_certificate_key     /etc/nginx/certs/domain.key;
 #        ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
