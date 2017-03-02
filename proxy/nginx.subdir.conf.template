@@ -32,7 +32,7 @@ server {
                 proxy_redirect  off;
                 if ($request_uri ~* /box(.*)) {   
 				    rewrite ^/box(.*)$ $1;
-                    proxy_pass      http://nginx2nc:80/;
+                    proxy_pass      http://nginx2nc:80;
                     break;
                 }
 
