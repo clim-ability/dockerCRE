@@ -54,8 +54,9 @@
 		 <replace file="proxy/nginx.conf" token="4443" value="${cre-port-https}"/>
 		 <replace file="proxy/nginx.conf" token="999999K" value="${cre-upload-size}"/>
 
-         <copy file="nextcloud/config/config.php.template" tofile="nextcloud/config/autoconfig.php" overwrite="true" />
+         <copy file="nextcloud/config/config.${cre-use-subdomains}.php.template" tofile="nextcloud/config/autoconfig.php" overwrite="true" />
          <replace file="nextcloud/config/autoconfig.php" token="example.com" value="${cre-domain}"/>
+		 <replace file="nextcloud/config/autoconfig.php" token="4443" value="${cre-port-https}"/>
          <replace file="nextcloud/config/autoconfig.php" token="klingaman" value="${cre-username}"/>
          <replace file="nextcloud/config/autoconfig.php" token="pinatubo" value="${cre-password}"/>
          <replace file="nextcloud/config/autoconfig.php" token="sumatra" value="${cre-dbname}"/>
