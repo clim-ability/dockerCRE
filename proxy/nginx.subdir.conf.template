@@ -38,7 +38,7 @@ server {
                 proxy_set_header        X-Forwarded-Proto $scheme;
 
                 proxy_redirect  off;
-                if ($request_uri ~* /b2ox(.*)) {   
+                if ($request_uri ~* /b2ox(.*)) {    
 				    rewrite ^/b2ox(.*)$ $1;
                     proxy_pass      http://nginx2nc:80;
                     break;
