@@ -6,8 +6,8 @@ $AUTOCONFIG = array (
   ),
   'directory' => '/var/www/html/data',
   'overwrite.cli.url' => 'https://example.com:4443/box',
-  'overwritehost' => 'https://example.com:4443',
-  'overwritewebroot' => '/box',
+  'overwritehost' => 'https://example.com:4443/box',
+  /* 'overwritewebroot' => '/box', */
   'dbtype' => 'pgsql',
   'version' => '9.1.1.5',
   'dbname' => 'sumatra',
