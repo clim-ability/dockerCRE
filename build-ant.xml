@@ -2,7 +2,7 @@
 <project name="dockerCRE" default="rebuild">
 
 
-     <target name="rebuild" depends="init, stop, certificate, copyReplace, start"/>
+     <target name="rebuild" depends="init, stop, certificate, copyReplace, start, replaceConfig"/>
      <target name="build-new" depends="init, certificate, copyReplace"/>
      <target name="kill-all" depends="stop, kill"/>
      
@@ -67,6 +67,15 @@
          <replace file="docker-compose.yml" token="sumatra" value="${cre-dbname}"/>
          <replace file="docker-compose.yml" token="80:80" value="${cre-port-http}:80"/>
 		 <replace file="docker-compose.yml" token="443:443" value="${cre-port-https}:443"/>
+    </target>
+	
+	<target name="replaceConfig" description="Adapt config files after startup">
+	     <copy file="nextcloud/config/proxyconfig.${cre-use-subdomains}.php.template" tofile="nextcloud/config/proxyconfig.php" overwrite="true" />
+         <replace file="nextcloud/config/proxyconfig.php" token="example.com" value="${cre-domain}"/>
+		 <replace file="nextcloud/config/proxyconfig.php" token="4443" value="${cre-port-https}"/>
+	
+	     <loadfile property="proxy-overwrite" srcFile="nextcloud/config/proxyconfig.php"/>
+         <replace file="nextcloud/config/config.php" token="'installed' => true" value="${proxy-overwrite}"/>
     </target>
 
 	

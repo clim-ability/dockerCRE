@@ -1,0 +1,7 @@
+'overwritehost' => 'example.com:4443',
+'overwritewebroot' => '/box',
+'htaccess.RewriteBase' => '/box',    
+'forcessl' => true,
+'overwriteprotocol' => 'https',
+'installed' => true
+
