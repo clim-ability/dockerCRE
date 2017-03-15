@@ -10,7 +10,6 @@ $AUTOCONFIG = array (
   'overwritewebroot' => '/box',
   'forcessl' => true,
   'overwriteprotocol' => 'https',  
-  'htaccess.RewriteBase' => '/box',
   'dbtype' => 'pgsql',
   'version' => '9.1.1.5',
   'dbname' => 'sumatra',
