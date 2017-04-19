@@ -69,13 +69,17 @@
 		 <replace file="docker-compose.yml" token="443:443" value="${cre-port-https}:443"/>
     </target>
 	
-	<target name="replaceConfig" description="Adapt config files after startup">
-	     <copy file="nextcloud/config/proxyconfig.${cre-use-subdomains}.php.template" tofile="nextcloud/config/proxyconfig.php" overwrite="true" />
-         <replace file="nextcloud/config/proxyconfig.php" token="example.com" value="${cre-domain}"/>
-		 <replace file="nextcloud/config/proxyconfig.php" token="4443" value="${cre-port-https}"/>
+	<target name="nextcloud-config">
+        <available file="nextcloud/config/config.php" property="nextcloud.config"/>
+    </target>
 	
-	     <loadfile property="proxy-overwrite" srcFile="nextcloud/config/proxyconfig.php"/>
-         <replace file="nextcloud/config/config.php" token="'installed' => true" value="${proxy-overwrite}"/>
+	<target name="replaceConfig" description="Adapt config files after startup" depends="nextcloud-config" if="nextcloud.config">
+	    <copy file="nextcloud/config/proxyconfig.${cre-use-subdomains}.php.template" tofile="nextcloud/config/proxyconfig.php" overwrite="true" />
+        <replace file="nextcloud/config/proxyconfig.php" token="example.com" value="${cre-domain}"/>
+		<replace file="nextcloud/config/proxyconfig.php" token="4443" value="${cre-port-https}"/>
+	
+	    <loadfile property="proxy-overwrite" srcFile="nextcloud/config/proxyconfig.php"/>
+        <replace file="nextcloud/config/config.php" token="'installed' => true" value="${proxy-overwrite}"/>
     </target>
 
 	
