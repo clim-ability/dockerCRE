@@ -2,8 +2,8 @@
 <project name="dockerCRE" default="rebuild">
 
 
-     <target name="rebuild" depends="init, stop, copyReplace, start"/>
-     <target name="build-new" depends="init, copyReplace"/>
+     <target name="rebuild" depends="init, stop, certificate, copyReplace, start, replaceConfig"/>
+     <target name="build-new" depends="init, certificate, copyReplace"/>
      <target name="kill-all" depends="stop, kill"/>
      
 
@@ -18,10 +18,13 @@
     <target name="init" description="Initialize environment">
         <property environment="env"/>
  
-
         <condition property="cre-domain" value="${env.CRE_DOMAIN}" else="example.com">
             <isset property="env.CRE_DOMAIN" /> 
         </condition>
+		<condition property="cre-use-subdomains" value="subdomain" else="subdir">
+            <isset property="env.CRE_USE_SUBDOMAINS" /> 
+        </condition>
+		
         <condition property="cre-username" value="${env.CRE_USERNAME}" else="username">
             <isset property="env.CRE_USERNAME" />
         </condition>
@@ -39,7 +42,6 @@
             <isset property="env.CRE_PORT_HTTPS" />
         </condition>
 
-
         <condition property="cre-upload-size" value="${env.CRE_UPLOAD_SIZE}" else="100M">
             <isset property="env.CRE_UPLOAD_SIZE" />
         </condition>
@@ -47,11 +49,14 @@
 
 
     <target name="copyReplace" description="Copy template files and replace some strings">
-         <copy file="proxy/nginx.conf.template" tofile="proxy/nginx.conf" overwrite="true" />
+         <copy file="proxy/nginx.${cre-use-subdomains}.conf.template" tofile="proxy/nginx.conf" overwrite="true" />
          <replace file="proxy/nginx.conf" token="example.com" value="${cre-domain}"/>
+		 <replace file="proxy/nginx.conf" token="4443" value="${cre-port-https}"/>
+		 <replace file="proxy/nginx.conf" token="999999K" value="${cre-upload-size}"/>
 
-         <copy file="nextcloud/config/config.php.template" tofile="nextcloud/config/autoconfig.php" overwrite="true" />
+         <copy file="nextcloud/config/config.${cre-use-subdomains}.php.template" tofile="nextcloud/config/autoconfig.php" overwrite="true" />
          <replace file="nextcloud/config/autoconfig.php" token="example.com" value="${cre-domain}"/>
+		 <replace file="nextcloud/config/autoconfig.php" token="4443" value="${cre-port-https}"/>
          <replace file="nextcloud/config/autoconfig.php" token="klingaman" value="${cre-username}"/>
          <replace file="nextcloud/config/autoconfig.php" token="pinatubo" value="${cre-password}"/>
          <replace file="nextcloud/config/autoconfig.php" token="sumatra" value="${cre-dbname}"/>
@@ -60,8 +65,28 @@
          <replace file="docker-compose.yml" token="klingaman" value="${cre-username}"/>
          <replace file="docker-compose.yml" token="pinatubo" value="${cre-password}"/>
          <replace file="docker-compose.yml" token="sumatra" value="${cre-dbname}"/>
-
+         <replace file="docker-compose.yml" token="80:80" value="${cre-port-http}:80"/>
+		 <replace file="docker-compose.yml" token="443:443" value="${cre-port-https}:443"/>
     </target>
+	
+	<target name="replaceConfig" description="Adapt config files after startup">
+	     <copy file="nextcloud/config/proxyconfig.${cre-use-subdomains}.php.template" tofile="nextcloud/config/proxyconfig.php" overwrite="true" />
+         <replace file="nextcloud/config/proxyconfig.php" token="example.com" value="${cre-domain}"/>
+		 <replace file="nextcloud/config/proxyconfig.php" token="4443" value="${cre-port-https}"/>
+	
+	     <loadfile property="proxy-overwrite" srcFile="nextcloud/config/proxyconfig.php"/>
+         <replace file="nextcloud/config/config.php" token="'installed' => true" value="${proxy-overwrite}"/>
+    </target>
+
+	
+	<target name="certificate">
+	    <exec executable="openssl" dir="proxy/certs">
+		  <arg line="req -x509 -nodes -days 365 -newkey rsa:2048"/>
+		  <arg line="-subj '/C=US/ST=Oregon/L=Portland/CN=${env.CRE_DOMAIN}'"/>
+		  <arg line=" -keyout domain.key -out domain.crt"/>
+		</exec>
+	</target>
+	
 
    <target name="start">
         <exec executable="docker-compose">

@@ -1,0 +1,25 @@
+<?php
+$AUTOCONFIG = array (
+  'trusted_domains' => 
+  array (
+    0 => 'example.com',
+  ),
+  'directory' => '/var/www/html/data',
+  'overwrite.cli.url' => 'https://example.com:4443/box',
+  'overwritehost' => 'example.com:4443',
+  'overwritewebroot' => '/box',
+  'htaccess.RewriteBase' => '/box',    
+  'forcessl' => true,
+  'overwriteprotocol' => 'https',
+  'dbtype' => 'pgsql',
+  'version' => '9.1.1.5',
+  'dbname' => 'sumatra',
+  'dbhost' => 'postgres2',
+  'dbport' => '',
+  'dbtableprefix' => 'oc_',
+  'dbuser' => 'klingaman',
+  'dbpass' => 'pinatubo',
+  'logtimezone' => 'UTC',
+  'adminlogin' => 'klingaman',
+  'adminpass' => 'pinatubo'
+);
