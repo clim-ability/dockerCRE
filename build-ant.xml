@@ -85,7 +85,7 @@
 	<target name="openssl-config">
 	    <condition property="openssl.noKeys">
             <not>
-                  <available filepath="proxy/certs/domain.crt"/>
+                  <available file="proxy/certs/domain.crt"/>
             </not>
         </condition>
     </target>
