@@ -82,8 +82,15 @@
         <replace file="nextcloud/config/config.php" token="'installed' => true" value="${proxy-overwrite}"/>
     </target>
 
+	<target name="openssl-config">
+	    <condition property="openssl.noKeys">
+            <not>
+                  <available filepath="proxy/certs/domain.crt"/>
+            </not>
+        </condition>
+    </target>
 	
-	<target name="certificate">
+	<target name="certificate" depends="openssl-config" if="openssl.noKeys">
 	    <exec executable="openssl" dir="proxy/certs">
 		  <arg line="req -x509 -nodes -days 365 -newkey rsa:2048"/>
 		  <arg line="-subj '/C=US/ST=Oregon/L=Portland/CN=${env.CRE_DOMAIN}'"/>
