@@ -1,7 +1,10 @@
-proxy2:
+version: '2'
+services:
+ proxy2:
 # image: nginx:latest
-  build: .
-  dockerfile: proxy/Dockerfile
+  build: 
+   context: .
+   dockerfile: proxy/Dockerfile
   container_name: proxy2
   volumes:
     - ./proxy/certs:/etc/nginx/certs:ro
@@ -14,7 +17,7 @@ proxy2:
     - nginx2
     - nginx2nc
 
-postgres2:
+ postgres2:
   image: postgres:9.5
   container_name: postgres2
   volumes:
@@ -24,7 +27,7 @@ postgres2:
     - POSTGRES_PASSWORD=pinatubo
     - POSTGRES_DB=sumatra
 
-nginx2:
+ nginx2:
     image: nginx:latest
     container_name: nginx2
     volumes:
@@ -34,9 +37,10 @@ nginx2:
     links:
         - php2
 
-php2:
-  build: .
-  dockerfile: php/Dockerfile
+ php2:
+  build: 
+   context: .
+   dockerfile: php/Dockerfile
   container_name: php2
   volumes:
     - ./site1:/code
@@ -47,7 +51,7 @@ php2:
 #    - elasticsearch2
 
 
-nginx2nc:
+ nginx2nc:
     image: nginx:latest
     container_name: nginx2nc
     volumes:
@@ -57,7 +61,7 @@ nginx2nc:
     volumes_from:
         - nextcloud2
 
-nextcloud2:
+ nextcloud2:
     image: indiehosters/nextcloud
     container_name: nextcloud2
     links:
