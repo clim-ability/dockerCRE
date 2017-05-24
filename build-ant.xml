@@ -45,6 +45,10 @@
         <condition property="cre-upload-size" value="${env.CRE_UPLOAD_SIZE}" else="100M">
             <isset property="env.CRE_UPLOAD_SIZE" />
         </condition>
+        <condition property="cre-quota" value="${env.CRE_QUOTA}" else="1G">
+            <isset property="env.CRE_QUOTA" />
+        </condition>
+		
     </target>
 
 
