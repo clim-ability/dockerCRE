@@ -2,9 +2,16 @@
 
 ### git
 
+sudo apt-get install git
+
+git config --global user.name "user_name"
+
+git config --global user.email "email_id"
 
 
 ### ant
+
+
 ### docker
 ### docker-compose
 
