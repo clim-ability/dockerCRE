@@ -15,5 +15,10 @@ sudo apt-get install ant
 
 
 ### docker
-### docker-compose
+
+sudo apt-get install docker
+
+sudo apt-get install docker-compose
+
+
 
