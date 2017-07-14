@@ -11,6 +11,8 @@ git config --global user.email "email_id"
 
 ### ant
 
+sudo apt-get install ant
+
 
 ### docker
 ### docker-compose
