@@ -20,5 +20,8 @@ sudo apt-get install docker
 
 sudo apt-get install docker-compose
 
+## Clone
+
+git clone https://github.com/tambora-org/dockerCRE.git
 
 
