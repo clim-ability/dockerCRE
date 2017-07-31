@@ -45,6 +45,10 @@
         <condition property="cre-upload-size" value="${env.CRE_UPLOAD_SIZE}" else="100M">
             <isset property="env.CRE_UPLOAD_SIZE" />
         </condition>
+        <condition property="cre-quota" value="${env.CRE_QUOTA}" else="1G">
+            <isset property="env.CRE_QUOTA" />
+        </condition>
+		
     </target>
 
 
@@ -82,8 +86,15 @@
         <replace file="nextcloud/config/config.php" token="'installed' => true" value="${proxy-overwrite}"/>
     </target>
 
+	<target name="openssl-config">
+	    <condition property="openssl.noKeys">
+            <not>
+                  <available file="proxy/certs/domain.crt"/>
+            </not>
+        </condition>
+    </target>
 	
-	<target name="certificate">
+	<target name="certificate" depends="openssl-config" if="openssl.noKeys">
 	    <exec executable="openssl" dir="proxy/certs">
 		  <arg line="req -x509 -nodes -days 365 -newkey rsa:2048"/>
 		  <arg line="-subj '/C=US/ST=Oregon/L=Portland/CN=${env.CRE_DOMAIN}'"/>
