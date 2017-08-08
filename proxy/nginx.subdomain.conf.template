@@ -31,7 +31,12 @@ server {
                     proxy_pass      http://nginx2nc:80;
                     break;
                 }
-
+                
+				if ($host ~* gis\.(.*)) {
+                    proxy_pass      http://qgis2:80;
+                    break;
+                }
+				
                 if ($host ~* dev\.(.*)) {
                     proxy_pass      http://nginx2:80;
                     break;

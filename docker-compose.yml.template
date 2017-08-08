@@ -16,6 +16,7 @@ services:
   links:
     - nginx2
     - nginx2nc
+    - qgis2
 
  postgres2:
   image: mdillon/postgis:9.5
@@ -70,6 +71,15 @@ services:
         - ./nextcloud/apps:/var/www/html/apps
         - ./nextcloud/config:/var/www/html/config
         - ./nextcloud/data:/var/www/html/data
+		
+qgis2:
+	image: opengisch/qgis-server-webclient
+	container_name: qgis2
+	links:
+	    - postgres2:db
+	volumes:
+        - ./qgis/projects:/web	
+		
 
 
 
