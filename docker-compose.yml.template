@@ -72,7 +72,7 @@ services:
         - ./nextcloud/config:/var/www/html/config
         - ./nextcloud/data:/var/www/html/data
 
-qgis2:
+ qgis2:
     image: opengisch/qgis-server-webclient
     container_name: qgis2
     links:
