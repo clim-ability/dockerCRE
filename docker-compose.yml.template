@@ -78,4 +78,4 @@ qgis2:
     links:
         - postgres2:db
     volumes:
-		- ./qgis/projects:/web
+        - ./qgis/projects:/web
