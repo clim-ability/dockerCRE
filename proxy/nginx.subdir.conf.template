@@ -60,13 +60,16 @@ server {
                     break;
                 }				
 
-
-				
                 if ($request_uri ~* /dev(.*)) {
                     proxy_pass      http://nginx2:80;
                     break;
                 }
-
+				
+                if ($request_uri ~* /db(.*)) {
+                    proxy_pass      http://postgres2:4443;
+                    break;
+                }
+				
                 return 406;
         }
 		

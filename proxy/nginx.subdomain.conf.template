@@ -41,7 +41,11 @@ server {
                     proxy_pass      http://nginx2:80;
                     break;
                 }
-                
+				
+                if ($host ~* db\.(.*)) {
+                    proxy_pass      http://postgres2:4443;
+                    break;
+                }                
                 return 404;
         }
 }
