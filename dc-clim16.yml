@@ -1,0 +1,63 @@
+version: '2'
+services:
+
+  cre-glue:
+    image: tamboraorg/creglue:clim.16
+    container_name: creglue
+    volumes:
+     - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  cre-proxy:
+    image: tamboraorg/creproxy:clim.16
+    container_name: creproxy
+    environment:
+      ADMIN_EMAIL: michael.kahle@yahoo.de
+      CRE_DOMAIN: clim-ability.eu
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./volumes/certs:/etc/letsencrypt"
+    volumes_from:
+      - cre-glue
+
+
+  cre-nginx-php:
+   image: tamboraorg/crenginxphp:clim.16
+   container_name: crenginxphp
+   environment: 
+     CRE_SUBDOMAIN: survey
+   volumes_from:
+    - cre-php
+    - cre-glue
+
+  cre-php:
+   image: tamboraorg/crephp:clim.16
+   container_name: crephp
+   environment:
+     CRE_PHP_ROOT: www/survey
+     CRE_NGINX: crenginxphp
+     MYSQL_DB: d02c6b98
+     MYSQL_USER: d02c6b98
+     MYSQL_PWD: secret2
+   volumes:
+      - ./volumes/www/survey:/cre/www/survey
+   volumes_from:
+    - cre-glue
+
+  cre-mysql:
+    image: tamboraorg/cremysql:clim.16
+    container_name: cremysql
+    environment:
+      MYSQL_ROOT_PWD: secret1
+      CRE_SUBDOMAIN:  mysql
+      CRE_PORT:       3306 
+    ports:
+      - "3306:3306"
+    volumes:
+#      - ./volumes/mysql/cre:/var/lib/mysql
+      - ./volumes/mysql/dumps/d02c6b98:/cre/mysql/dumps/d02c6b98
+    volumes_from:
+      - cre-glue
+ 
+# docker-compose  --file dc-clim.yml up -d
