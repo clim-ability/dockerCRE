@@ -21,16 +21,37 @@
 |                 to the table name when using the Active Record class
 |
 */
+require_once("/cre/db-config.php");
+// only allow one database!
+$db = ['connectionString' => '',
+       'emulatePrepare' => true,
+       'username' => '',
+       'password' => '',
+       'charset' => 'utf8mb4',
+       'tablePrefix' => 'lime_'];
+// so take the last mysql connection only
+foreach(inqDbConnections() as $con=>$data) {
+  if('mysql' == $data['type']) {
+     $db['connectionString'] = $data['pdo'];
+     $db['username'] = $data['user'];
+     $db['password'] = $data['password'];
+  } 
+}
+
+
+$old =  array(
+                        'connectionString' => 'mysql:host=172.18.0.3;port=3306;dbname=d02c6b98;',
+                        'emulatePrepare' => true,
+                        'username' => 'd02c6b98',
+                        'password' => 'oZyyN5TTt82a3mGx',
+                        'charset' => 'utf8mb4',
+                        'tablePrefix' => 'lime_',
+                );
+
+
 return array(
 	'components' => array(
-		'db' => array(
-			'connectionString' => 'mysql:host=localhost;port=3306;dbname=d02c6b98;',
-			'emulatePrepare' => true,
-			'username' => 'd02c6b98',
-			'password' => 'oZyyN5TTt82a3mGx',
-			'charset' => 'utf8mb4',
-			'tablePrefix' => 'lime_',
-		),
+		'db' => $db,
 		
 		// Uncomment the following line if you need table-based sessions
 		// 'session' => array (
