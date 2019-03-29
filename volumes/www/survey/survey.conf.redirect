@@ -1,0 +1,7 @@
+## RewriteEngine On
+## Redirect 301 /clim-ability-check-tool/ https://www.quest.clim-ability.eu/index.php/111111/
+## ---
+ location /clim-ability-check-tool/ {
+   rewrite ^(.*)$ https://www.quest.clim-ability.eu/index.php/111111/ redirect;
+ }
+## ---

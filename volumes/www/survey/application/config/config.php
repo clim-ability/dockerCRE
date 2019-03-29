@@ -21,7 +21,7 @@
 |                 to the table name when using the Active Record class
 |
 */
-require_once("/cre/db-config.php");
+require_once("/cre/www/db-config.php");
 // only allow one database!
 $db = ['connectionString' => '',
        'emulatePrepare' => true,
